@@ -19,7 +19,8 @@
                 name="Equipment">
                     <menuitem
                     id="rental_equipment_list_menu"
-                    name="Equipment List"/>
+                    name="Equipment List"
+                    action="rental_equipment_action"/>
                     <menuitem
                     id="rental_equipment_category_menu"
                     name="Equipment Categories"
