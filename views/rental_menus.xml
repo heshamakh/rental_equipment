@@ -22,7 +22,8 @@
                     name="Equipment List"/>
                     <menuitem
                     id="rental_equipment_category_menu"
-                    name="Equipment Categories"/>
+                    name="Equipment Categories"
+                    action="rental_equipment_category_action"/>
             </menuitem>
     </menuitem>
 
