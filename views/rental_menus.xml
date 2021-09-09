@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="rental_menu_root"
+        name="Rental Equipment">
+            <menuitem
+                id="rental_rent_menu"
+                name="Rent">
+                    <menuitem
+                    id="rental_rent_application_menu"
+                    name="Rental Applications"/>
+                    <menuitem
+                    id="rental_rent_calendar_menu"
+                    name="Calendar"/>
+            </menuitem>
+            <menuitem
+                id="rental_equipment_menu"
+                name="Equipment">
+                    <menuitem
+                    id="rental_equipment_list_menu"
+                    name="Equipment List"/>
+                    <menuitem
+                    id="rental_equipment_category_menu"
+                    name="Equipment Categories"/>
+            </menuitem>
+    </menuitem>
+
+</odoo>
