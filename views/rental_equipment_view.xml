@@ -21,7 +21,7 @@
         </field>
     </record>
 
-    <record id="rental.equipment_view_form" model="ir.ui.view">
+    <record id="rental_equipment_view_form" model="ir.ui.view">
         <field name="name">rental.equipment.form</field>
         <field name="model">rental.equipment</field>
         <field name="arch" type="xml">

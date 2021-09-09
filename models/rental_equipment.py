@@ -8,7 +8,7 @@ class rental_equipment(models.Model):
     description = fields.Char()
     category_id = fields.Many2one('rental.equipment.category', string='Category', required=True)
     owner_id = fields.Many2one("res.partner", string="Owner", required=True)
-    fees = fields.Float(digits=(total, decimal), required=True)
+    fees = fields.Float(required=True)
     state = fields.Selection([
         ('available', 'Available'),
         ('rented', 'Rented'),
