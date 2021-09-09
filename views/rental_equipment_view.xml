@@ -13,7 +13,7 @@
         <field name="arch" type="xml">
             <tree string="Equipment">
                 <field name="name" />
-                <field name="state" widget="many2many_tags" />
+                <field name="state" widget="badge" />
                 <field name="category_id" />
                 <field name="fees" />
                 <field name="owner_id" />
@@ -31,7 +31,7 @@
                         <h1><field name="name" /></h1>
                     </group>
                     <group>
-                        <field name="state" widget="many2many_tags" />
+                        <field name="state" widget="badge" />
                     </group>
                     <group>
                         <group>
