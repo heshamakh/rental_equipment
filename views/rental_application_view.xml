@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="rental_application_action" model="ir.actions.act_window">
+        <field name="name">Application</field>
+        <field name="res_model">rental.application</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="rental_application_view_tree" model="ir.ui.view">
+        <field name="name">rental.application.tree</field>
+        <field name="model">rental.application</field>
+        <field name="arch" type="xml">
+            <tree string="Application">
+                <field name="user_id" />
+                <field name="state" widget="badge" />
+                <field name="from_date" />
+                <field name="to_date" />
+                <field name="total_cost" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="rental_application_view_form" model="ir.ui.view">
+        <field name="name">rental.application.form</field>
+        <field name="model">rental.application</field>
+        <field name="arch" type="xml">
+            <form string="Application">
+                <sheet>
+                    <group>
+                        <h1><field name="user_id" /></h1>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="state" widget="badge" />
+                        </group>
+                        <group>
+                            <field name="total_cost" />
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="from_date" />
+                        </group>
+                        <group>
+                            <field name="to_date" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="rental_application_view_search" model="ir.ui.view">
+        <field name="name">rental.application.view.search</field>
+        <field name="model">rental.application</field>
+        <field name="arch" type="xml">
+            <search string="Application">
+                <field name="user_id" />
+                <separator/>
+                <filter string="New" name="new" domain="[('state', '=', 'new')]"/>
+                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>
