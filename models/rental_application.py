@@ -4,7 +4,7 @@ class rental_application(models.Model):
     _name = 'rental.application'
     _description = 'Rental Application'
 
-    user_id = fields.Many2one('res.user', string='User', required=True)
+    user_id = fields.Many2one('res.users', string='User', required=True, default=lambda self: self.env.user)
     state = fields.Selection([
         ('new', 'New'),
         ('active','Active'),
@@ -14,4 +14,4 @@ class rental_application(models.Model):
     from_date = fields.Date(required=True)
     to_date = fields.Date(required=True)
 
-    total = fields.Float(string='Total', readonly=True)
+    total_cost = fields.Float(string='Total', readonly=True)
