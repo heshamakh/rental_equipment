@@ -9,7 +9,8 @@
                 name="Rent">
                     <menuitem
                     id="rental_rent_application_menu"
-                    name="Rental Applications"/>
+                    name="Rental Applications"
+                    action="rental_application_action"/>
                     <menuitem
                     id="rental_rent_calendar_menu"
                     name="Calendar"/>
