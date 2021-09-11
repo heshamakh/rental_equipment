@@ -10,7 +10,7 @@ class rental_application(models.Model):
     _name = 'rental.application'
     _description = 'Rental Application'
 
-    user_id = fields.Many2one('res.users', string='User', required=True, default=lambda self: self.env.user)
+    user_id = fields.Many2one('res.users', string='Renter', required=True, default=lambda self: self.env.user)
     state = fields.Selection([
         ('new', 'New'),
         ('active','Active'),
@@ -52,7 +52,7 @@ class rental_application(models.Model):
         # Get all "open application" that conflict with these dates
         all_conflict_apps = self.env['rental.application'].search([
             ('id','!=',self._origin.id),
-            ('state','!=','Done'),
+            ('state','!=','done'),
             '|',
             '|',
             '&',('from_date','>',self.from_date),('to_date','<',self.to_date),
@@ -63,7 +63,7 @@ class rental_application(models.Model):
         _logger.info(f'to be rented ids {self.rented_equipment_ids}')
     
     @api.constrains('equipment_ids')
-    def _check_date_end(self):
+    def _check_equipment_ids(self):
         for record in self:
             record._get_rented_equipment()
             # Validate Potential Equipment if will be available
