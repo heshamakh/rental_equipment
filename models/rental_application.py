@@ -18,12 +18,22 @@ class rental_application(models.Model):
 
     from_date = fields.Date(required=True, default=lambda self:fields.Date.today() + relativedelta(days=1))#from next day
     to_date = fields.Date(required=True, default=lambda self:fields.Date.today() + relativedelta(days=8))#to next week
-    total_cost = fields.Float(string='Total', readonly=True)
+    total_cost = fields.Float(compute='_compute_total_cost', string='Total', readonly=True)
     
     equipment_ids = fields.Many2many('rental.equipment', string='Equipment')
     rented_equipment_ids = fields.One2many('rental.equipment', 'app_id', store=False, readonly=True)
     
-    @api.onchange("from_date","to_date")
+    @api.depends('equipment_ids','from_date','to_date')
+    def _compute_total_cost(self):
+        for record in self:
+            sum_cost = 0
+            period = (record.to_date - record.from_date).days
+            for equipment in record.equipment_ids:
+                sum_cost += equipment.fees * period
+            record.total_cost = sum_cost
+        record._validate_rented_ids()
+    
+    @api.onchange('from_date','to_date')
     def _onchange_dates(self):
         if(self.from_date <= fields.Date.today()):
             _logger.info('From_Date validation failed')
