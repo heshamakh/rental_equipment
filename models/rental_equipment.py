@@ -14,3 +14,5 @@ class rental_equipment(models.Model):
         ('rented', 'Rented'),
         ('late', 'Late')
     ], default='available', readonly=True, copy=False)
+
+    app_id = fields.Many2one('rental.application', string='')

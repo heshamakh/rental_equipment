@@ -16,7 +16,7 @@
                 <field name="state" widget="badge" />
                 <field name="category_id" />
                 <field name="fees" />
-                <field name="owner_id" />
+                <field name="owner_id" widget="many2one_avatar" />
             </tree>
         </field>
     </record>
@@ -37,7 +37,7 @@
                         <group>
                             <field name="description"/>
                             <field name="category_id" />
-                            <field name="owner_id"/>
+                            <field name="owner_id"  widget="many2one_avatar" />
                             <field name="fees"/>
                         </group>
                     </group>
