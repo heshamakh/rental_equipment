@@ -45,11 +45,12 @@ class rental_application(models.Model):
     
     def _validate_rented_ids(self):
         self.rented_equipment_ids = False
-        all_conflict_apps = self.env['rental.application'].search(['&',
-        ('state','!=','Done'),
-        '|',
-        '&',('from_date','<=',self.from_date),('to_date','>=',self.from_date),
-        '&',('from_date','<=',self.to_date),('to_date','>=',self.to_date)
-        ])
+        all_conflict_apps = self.env['rental.application'].search([
+            ('id','!=',self._origin.id),
+            ('state','!=','Done'),
+            '|',
+            '&',('from_date','<=',self.from_date),('to_date','>=',self.from_date),
+            '&',('from_date','<=',self.to_date),('to_date','>=',self.to_date)
+            ])
         self.rented_equipment_ids = all_conflict_apps.mapped('equipment_ids.id')
         return False
