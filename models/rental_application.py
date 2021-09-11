@@ -23,6 +23,13 @@ class rental_application(models.Model):
     
     equipment_ids = fields.Many2many('rental.equipment', string='Equipment')
     rented_equipment_ids = fields.One2many('rental.equipment', 'app_id', store=False, readonly=True)
+
+    name = fields.Char(compute='_compute_name', store=False, readonly=True)
+    
+    @api.depends('equipment_ids')
+    def _compute_name(self):
+        for record in self:
+            record.name = f'{str(record.id)}-RA for {", ".join(record.equipment_ids.mapped("name"))}'
     
     @api.depends('equipment_ids','from_date','to_date')
     def _compute_total_cost(self):

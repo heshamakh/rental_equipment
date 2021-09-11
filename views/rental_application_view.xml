@@ -4,7 +4,13 @@
     <record id="rental_application_action" model="ir.actions.act_window">
         <field name="name">Rental Applications</field>
         <field name="res_model">rental.application</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+    <record id="rental_application_calendar_action" model="ir.actions.act_window">
+        <field name="name">Rental Applications</field>
+        <field name="res_model">rental.application</field>
+        <field name="view_mode">calendar</field>
     </record>
 
     <record id="rental_application_view_tree" model="ir.ui.view">
@@ -75,6 +81,19 @@
                 <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
                 <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
             </search>
+        </field>
+    </record>
+
+    <record id="rental_application_view_calendar" model="ir.ui.view">
+        <field name="name">rental.application.view.calendar</field>
+        <field name="model">rental.application</field>
+        <field name="arch" type="xml">
+            <calendar string="Rental Applications Calendar" date_start="from_date" date_stop="to_date"
+            color="state" form_view_id="rental_application_view_form" mode="month" quick_add="False" event_open_popup="true">
+                <field name="name" />
+                <field name="state" widget="badge" />
+                <field name="total_cost" />
+            </calendar>
         </field>
     </record>
 
