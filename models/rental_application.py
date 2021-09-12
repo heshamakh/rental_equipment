@@ -14,6 +14,7 @@ class rental_application(models.Model):
     state = fields.Selection([
         ('new', 'New'),
         ('active','Active'),
+        ('late','Late'),
         ('done','Done')
     ], default='new', readonly=True, copy=False)
 
@@ -80,3 +81,12 @@ class rental_application(models.Model):
                     raise ValidationError(_(f'"{equipment.name}" Equipment is rented or reserved to be rent on the same period of your application'))
             if(len(record.equipment_ids) < 2):
                 raise ValidationError(_('Rental Application should be created for two equipment at least'))
+    
+    def cron_check_late(self):
+        today = fields.Date.today()
+        # Get all "Active & Late applications"
+        all_late_active_apps = record.env['rental.application'].search([('state','=','active'),('to_date','<',today)])
+        for app in all_late_active_apps:
+            app.state = 'late'
+            for equipment in app.equipment_ids:
+                equipment.state = 'late'

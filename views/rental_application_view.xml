@@ -97,4 +97,19 @@
         </field>
     </record>
 
+    <data noupdate="1">
+    
+        <record id="rental_application_cron" model="ir.cron">
+            <field name="name">Cron Check Late</field>
+            <field name="model_id" ref="model_rental_application"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="state">code</field>
+            <field name="code">model.cron_check_late()</field>
+            <field name="doall" eval="False"/>
+        </record>
+    
+    </data>
+    
 </odoo>
