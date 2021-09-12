@@ -1,6 +1,8 @@
 {
     'name': 'Rental Equipment',
+    'version': '1.0.0',
     'summary': 'track equipment rental process',
+    'website': 'https://github.com/heshamakh/rental_equipment',
     'depends': ['base'],
     'data': [
         'security/ir.model.access.csv',

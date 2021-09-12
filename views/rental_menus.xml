@@ -13,7 +13,8 @@
                     action="rental_application_action"/>
                     <menuitem
                     id="rental_rent_calendar_menu"
-                    name="Calendar"/>
+                    name="Calendar"
+                    action="rental_application_calendar_action"/>
             </menuitem>
             <menuitem
                 id="rental_equipment_menu"

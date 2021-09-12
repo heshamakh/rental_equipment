@@ -14,6 +14,7 @@ class rental_application(models.Model):
     state = fields.Selection([
         ('new', 'New'),
         ('active','Active'),
+        ('late','Late'),
         ('done','Done')
     ], default='new', readonly=True, copy=False)
 
@@ -23,6 +24,13 @@ class rental_application(models.Model):
     
     equipment_ids = fields.Many2many('rental.equipment', string='Equipment')
     rented_equipment_ids = fields.One2many('rental.equipment', 'app_id', store=False, readonly=True)
+
+    name = fields.Char(compute='_compute_name', store=False, readonly=True)
+    
+    @api.depends('equipment_ids')
+    def _compute_name(self):
+        for record in self:
+            record.name = f'{str(record.id)}-RA for {", ".join(record.equipment_ids.mapped("name"))}'
     
     @api.depends('equipment_ids','from_date','to_date')
     def _compute_total_cost(self):
@@ -73,3 +81,32 @@ class rental_application(models.Model):
                     raise ValidationError(_(f'"{equipment.name}" Equipment is rented or reserved to be rent on the same period of your application'))
             if(len(record.equipment_ids) < 2):
                 raise ValidationError(_('Rental Application should be created for two equipment at least'))
+    
+    def cron_check_late(self):
+        today = fields.Date.today()
+        # Get all "Active & Late applications"
+        all_late_active_apps = record.env['rental.application'].search([('state','=','active'),('to_date','<',today)])
+        for app in all_late_active_apps:
+            app.state = 'late'
+            for equipment in app.equipment_ids:
+                equipment.state = 'late'
+    
+    def activate_application_action(self):
+        if(self.from_date > fields.Date.today()):
+            raise ValidationError(_('You can not activate this application before its day'))
+        elif(self.state != 'new'):
+            raise ValidationError(_('This application is already activated'))
+        self.state = 'active'
+        for equipment in self.equipment_ids:
+            equipment.state = 'rented'
+    
+    def finish_application_action(self):
+        if(self.to_date > fields.Date.today()):
+            raise ValidationError(_('You can not finish this application before its day'))
+        elif(self.state == 'new'):
+            raise ValidationError(_('This application should be activated first'))
+        elif(self.state == 'done'):
+            raise ValidationError(_('This application is already done'))
+        self.state = 'done'
+        for equipment in self.equipment_ids:
+            equipment.state = 'available'
