@@ -101,7 +101,7 @@ class rental_application(models.Model):
             equipment.state = 'rented'
     
     def finish_application_action(self):
-        if(self.to_date <= fields.Date.today()):
+        if(self.to_date > fields.Date.today()):
             raise ValidationError(_('You can not finish this application before its day'))
         elif(self.state == 'new'):
             raise ValidationError(_('This application should be activated first'))
