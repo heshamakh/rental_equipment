@@ -90,3 +90,23 @@ class rental_application(models.Model):
             app.state = 'late'
             for equipment in app.equipment_ids:
                 equipment.state = 'late'
+    
+    def activate_application_action(self):
+        if(self.from_date > fields.Date.today()):
+            raise ValidationError(_('You can not activate this application before its day'))
+        elif(self.state != 'new'):
+            raise ValidationError(_('This application is already activated'))
+        self.state = 'active'
+        for equipment in self.equipment_ids:
+            equipment.state = 'rented'
+    
+    def finish_application_action(self):
+        if(self.to_date <= fields.Date.today()):
+            raise ValidationError(_('You can not finish this application before its day'))
+        elif(self.state == 'new'):
+            raise ValidationError(_('This application should be activated first'))
+        elif(self.state == 'done'):
+            raise ValidationError(_('This application is already done'))
+        self.state = 'done'
+        for equipment in self.equipment_ids:
+            equipment.state = 'available'

@@ -32,6 +32,10 @@
         <field name="model">rental.application</field>
         <field name="arch" type="xml">
             <form string="Rental Application">
+                <header>
+                    <button string="Activate (recieved equipment)" name="activate_application_action" type="object" class="oe_highlight"/>
+                    <button string="Done (delivered equipment)" name="finish_application_action" type="object" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <h1><field name="user_id" widget="many2one_avatar" /></h1>
